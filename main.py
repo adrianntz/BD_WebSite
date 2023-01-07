@@ -61,6 +61,24 @@ def donorCreate():
 		msg = 'Please fill out the form !'
 	return render_template('donorCreate.html', msg = msg)
 
+@app.route('/seekerCreate', methods =['GET', 'POST'])
+def seekerCreate():
+	msg = ''
+	if request.method == 'POST' and 'firstName' in request.form and 'lastName' in request.form and 'dateBirth' in request.form and 'address' in request.form and 'bloodGroup' in request.form  and 'cnp' in request.form:
+		var_firstName = request.form['firstName']
+		var_lastName = request.form['lastName']
+		var_dateBirth = request.form['dateBirth']
+		var_address = request.form['address']
+		var_bloodGroup = request.form['bloodGroup']
+		var_cnp=request.form['cnp']
+		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+		cursor.execute("INSERT INTO `blooddonationsystemdb`.`tbl_seeker` (`firstName`, `lastName`, `date_of_birth`, `location`, `blodGroup`,`cnp`) VALUES (%s,%s,%s,%s,%s,%s)",(var_firstName, var_lastName, var_dateBirth, var_address, var_bloodGroup,var_cnp))
+		mysql.connection.commit()
+		msg = 'You have successfully registered !'
+	elif request.method == 'POST':
+		msg = 'Please fill out the form !'
+	return render_template('seekerCreate.html', msg = msg)
+
 @app.route('/screeningintroduce', methods =['GET', 'POST'])
 def screeningintroduce():
 	msg = ''
