@@ -2,24 +2,24 @@
 <table class="table">
   <thead class="thead-dark">
    <tr>
-       <th scope="col">Category ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">Target audience</th>
-      <th scope="col">Setting</th>
-        <th scope="col">Theme</th>
-        <th scope="col">Production</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Date of Birth</th>
+        <th scope="col">Address</th>
+        <th scope="col">Blood Group</th>
+        <th scope="col">CNP</th>
     </tr>
 
   </thead>
   <tbody>
-  {% for user in displayVector %}
+  {% for donorData in displayVector %}
     <tr>
-        <td> {{user[0]}} </td>
-        <td> {{user[1]}} </td>
-        <td> {{user[2]}} </td>
-        <td> {{user[3]}} </td>
-        <td> {{user[4]}} </td>
-        <td> {{user[5]}} </td>
+        <td> {{donorData[1]}} </td>
+        <td> {{donorData[2]}} </td>
+        <td> {{donorData[3]}} </td>
+        <td> {{donorData[4]}} </td>
+        <td> {{donorData[5]}} </td>
+        <td> {{donorData[6]}} </td>
     </tr>
   {% endfor%}
   </tbody>

@@ -32,8 +32,8 @@ def index():
 	return render_template("index.html")
 
 
-@app.route('/bloodbankCreate', methods =['GET', 'POST'])
-def bloodbankCreate():
+@app.route('/createBloodbank', methods =['GET', 'POST'])
+def createBloodbank():
 	msg = ''
 	if request.method == 'POST' and 'name' in request.form and 'address' in request.form and 'email' in request.form and 'phone' in request.form:
 		var_name = request.form['name']
@@ -46,10 +46,10 @@ def bloodbankCreate():
 		msg = 'You have successfully registered !'
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('bloodbankCreate.html', msg = msg)
+	return render_template('createBloodbank.html', msg = msg)
 
-@app.route('/donorCreate', methods =['GET', 'POST'])
-def donorCreate():
+@app.route('/createDonor', methods =['GET', 'POST'])
+def createDonor():
 	msg = ''
 	if request.method == 'POST' and 'firstName' in request.form and 'lastName' in request.form and 'dateBirth' in request.form and 'address' in request.form and 'bloodGroup' in request.form  and 'cnp' in request.form:
 		var_firstName = request.form['firstName']
@@ -64,10 +64,10 @@ def donorCreate():
 		msg = 'You have successfully registered !'
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('donorCreate.html', msg = msg)
+	return render_template('createDonor.html', msg = msg)
 
-@app.route('/seekerCreate', methods =['GET', 'POST'])
-def seekerCreate():
+@app.route('/createSeeker', methods =['GET', 'POST'])
+def createSeeker():
 	msg = ''
 	if request.method == 'POST' and 'firstName' in request.form and 'lastName' in request.form and 'dateBirth' in request.form and 'address' in request.form and 'bloodGroup' in request.form  and 'cnp' in request.form:
 		var_firstName = request.form['firstName']
@@ -82,10 +82,10 @@ def seekerCreate():
 		msg = 'You have successfully registered !'
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('seekerCreate.html', msg = msg)
+	return render_template('createSeeker.html', msg = msg)
 
-@app.route('/bloodstockCreate', methods =['GET', 'POST'])
-def bloodstockCreate():
+@app.route('/createBloodstock', methods =['GET', 'POST'])
+def createBloodstock():
 	msg = ''
 	cursor = mysql.connection.cursor()
 	users = cursor.execute("SELECT name FROM blooddonationsystemdb.tbl_bloodbank")
@@ -121,11 +121,11 @@ def bloodstockCreate():
 		msg = 'You have successfully registered !'
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('bloodstockCreate.html', bloodBankIdDisplay = bloodBankIdDisplay,bloodDonorIdDisplay=bloodDonorIdDisplay,msg=msg)
+	return render_template('createBloodstock.html', bloodBankIdDisplay = bloodBankIdDisplay,bloodDonorIdDisplay=bloodDonorIdDisplay,msg=msg)
 
 
-@app.route('/requestCreate', methods=['GET', 'POST'])
-def requestCreate():
+@app.route('/createRequest', methods=['GET', 'POST'])
+def createRequest():
 	msg = ''
 	cursor = mysql.connection.cursor()
 	users = cursor.execute("SELECT * FROM blooddonationsystemdb.tbl_seeker")
@@ -167,32 +167,32 @@ def requestCreate():
 
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('requestCreate.html', seekerIdDisplay=seekerIdDisplay,   bloodBankIdDisplay=bloodBankIdDisplay, msg=msg)
+	return render_template('createRequest.html', seekerIdDisplay=seekerIdDisplay,   bloodBankIdDisplay=bloodBankIdDisplay, msg=msg)
 
 
-@app.route('/categoriesdisplay')
-def categoriesdisplay():
+@app.route('/readDonors')
+def readDonors():
     cursor = mysql.connection.cursor()
-    users=cursor.execute("SELECT * FROM categories_movies.category")
+    users=cursor.execute("SELECT * FROM blooddonationsystemdb.tbl_donor")
     if users>0:
         displayVector=cursor.fetchall()
-        return render_template('categoriesdisplay.html',displayVector=displayVector)
+        return render_template('readDonors.html',displayVector=displayVector)
 
-@app.route('/moviesdisplay')
-def moviesdisplay():
+@app.route('/readSeekers')
+def readSeekers():
     cursor = mysql.connection.cursor()
-    users=cursor.execute("SELECT * FROM categories_movies.movie")
+    users=cursor.execute("SELECT * FROM blooddonationsystemdb.tbl_seeker")
     if users>0:
         displayVector=cursor.fetchall()
-        return render_template('moviesdisplay.html',displayVector=displayVector)
+        return render_template('readSeekers.html',displayVector=displayVector)
 
-@app.route('/screeningdisplay')
-def screeningdisplay():
+@app.route('/readBloodBanks')
+def readBloodBanks():
     cursor = mysql.connection.cursor()
-    users=cursor.execute("SELECT * FROM categories_movies.screening")
+    users=cursor.execute("SELECT * FROM blooddonationsystemdb.tbl_bloodbank")
     if users>0:
         displayVector=cursor.fetchall()
-        return render_template('screeningdisplay.html',displayVector=displayVector)
+        return render_template('readBloodBanks.html',displayVector=displayVector)
 
 @app.route('/categorydelete', methods =['GET', 'POST'])
 def categorydelete():
