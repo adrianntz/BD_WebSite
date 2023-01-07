@@ -9,9 +9,9 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="text-center">
-                                <img src="https://static.wixstatic.com/media/2cd43b_9f53f4ff66d74565a61fb5b017b33bec~mv2.png/v1/fill/w_320,h_320,q_90/2cd43b_9f53f4ff66d74565a61fb5b017b33bec~mv2.png" alt="car-key" border="0">
-                                <h2 class="text-center">New Category</h2>
-                                <p>You can enter new data for a category here.</p>
+                                <img src="https://cdn-icons-png.flaticon.com/512/4493/4493067.png" height=250 width-=250 alt="car-key" border="0">
+                                <h2 class="text-center">New Blood Request</h2>
+                                <p>You can enter new blood request here.</p>
                                 <form id="register-form" role="form" autocomplete="off" class="form" method="post">
                                     <div class="form-group">
                                         <div class="input-group">
@@ -21,32 +21,31 @@
                                     <div class="form-group">
                                     <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
+                                        <select name="seekerId" id="seekerId">
+                                            <option value="">--Choose Blood Seeker --</option>
+                                            {% for seekerIdVector in seekerIdDisplay %}
+                                                <option value="{{seekerIdVector[1]}} {{seekerIdVector[2]}}">{{seekerIdVector[1]}} {{seekerIdVector[2]}} </option>
+                                            {% endfor%}
+                                        </select></br></br>
+                                        <select name="bloodBankId" id="bloodBankId">
+                                            <option value="">--Choose Blood Bank --</option>
+                                            {% for bloodBankIdVector in bloodBankIdDisplay %}
+                                                <option value="{{bloodBankIdVector[0]}}">{{bloodBankIdVector[0]}} </option>
+                                            {% endfor%}
+                                        </select></br></br>
 
-                                            <input type="text" name="name" placeholder="Enter Category Name" class="form-control" id="name" required></br></br>
-
-                                        </div>
+                                        <select name="approval" id="approval">
+                                            <option value="">--Choose Approval for request --</option>
+                                                <option value="0">Unapproved </option>
+                                                <option value="1">Approved </option>
+                                        </select></br></br>
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="target_audience" placeholder="Enter Target Audience" class="form-control" id="target_audience" required></br></br>
-
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="setting" placeholder="Enter  Setting" class="form-control" id="setting" required></br></br>
-                                        </div>
-
-                                         </div>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="theme" placeholder="Enter Theme" class="form-control" id="theme" required></br></br>
-
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="production" placeholder="Enter Type of Production" class="form-control" id="production" required></br></br>
-                                        </div>
-
-
+                                            <input placeholder="Enter Request Date" class="textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" name="reqDate" id="expirDate"class="form-control" />
+                                            </br></br>
                                         </div>
                                     </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <input name="btnForget" class="btn btn-lg btn-primary btn-block btnForget" value="Submit Data" type="submit">
                                     </div>
@@ -69,3 +68,4 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<body></body>
