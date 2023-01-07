@@ -43,22 +43,23 @@ def bloodbankCreate():
 		msg = 'Please fill out the form !'
 	return render_template('bloodbankCreate.html', msg = msg)
 
-@app.route('/categoryintroduce', methods =['GET', 'POST'])
-def categoryintroduce():
+@app.route('/donorCreate', methods =['GET', 'POST'])
+def donorCreate():
 	msg = ''
-	if request.method == 'POST' and 'name' in request.form and 'target_audience' in request.form and 'setting' in request.form and 'theme' in request.form and 'production' in request.form:
-		name = request.form['name']
-		target_audience = request.form['target_audience']
-		setting = request.form['setting']
-		theme = request.form['theme']
-		production = request.form['production']
+	if request.method == 'POST' and 'firstName' in request.form and 'lastName' in request.form and 'dateBirth' in request.form and 'address' in request.form and 'bloodGroup' in request.form  and 'cnp' in request.form:
+		var_firstName = request.form['firstName']
+		var_lastName = request.form['lastName']
+		var_dateBirth = request.form['dateBirth']
+		var_address = request.form['address']
+		var_bloodGroup = request.form['bloodGroup']
+		var_cnp=request.form['cnp']
 		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-		cursor.execute("INSERT INTO `categories_movies`.`category` (`name`, `target_audience`, `setting`, `theme`, `production`) VALUES (%s,%s,%s,%s,%s)",(name, target_audience, setting, theme, production))
+		cursor.execute("INSERT INTO `blooddonationsystemdb`.`tbl_donor` (`firstName`, `lastName`, `date_of_birth`, `location`, `bloodGroup`,`cnp`) VALUES (%s,%s,%s,%s,%s,%s)",(var_firstName, var_lastName, var_dateBirth, var_address, var_bloodGroup,var_cnp))
 		mysql.connection.commit()
 		msg = 'You have successfully registered !'
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('categoryintroduce.html', msg = msg)
+	return render_template('donorCreate.html', msg = msg)
 
 @app.route('/screeningintroduce', methods =['GET', 'POST'])
 def screeningintroduce():
