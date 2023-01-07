@@ -249,28 +249,42 @@ def screeningdelete():
 		msg = 'Please fill out the form !'
 	return render_template("screeningdelete.html",msg=msg)
 
-@app.route('/categoryupdate', methods=['GET','POST'])
-def categoryupdate():
+@app.route('/updateDonor', methods=['GET','POST'])
+def updateDonor():
 	msg=''
-	if request.method == 'POST' and 'idcat' in request.form and 'name' in request.form and 'target_audience' in request.form and 'setting' in request.form and 'theme' in request.form and 'production' in request.form:
-		idcat=request.form['idcat']
-		name = request.form['name']
-		target_audience = request.form['target_audience']
-		setting = request.form['setting']
-		theme = request.form['theme']
-		production = request.form['production']
+	cursor = mysql.connection.cursor()
+	users = cursor.execute("SELECT firstName,lastname FROM blooddonationsystemdb.tbl_donor")
+	if users > 0:
+		selectedDonorNameVect = cursor.fetchall()
+
+
+
+
+	if request.method == 'POST' and 'firstName' in request.form and 'lastName' in request.form and 'dateBirth' in request.form and 'address' in request.form and 'bloodGroup' in request.form and 'cnp' in request.form:
+		var_selectedName=request.form['donorName']
+		var_selectedName=var_selectedName.split()
+		users = cursor.execute("SELECT idDonor FROM blooddonationsystemdb.tbl_donor where firstName=%s and lastName=%s", (var_selectedName[0], var_selectedName[1]))
+		if users > 0:
+			donorId = cursor.fetchall()
+		var_firstName = request.form['firstName']
+		var_lastName = request.form['lastName']
+		var_dateBirth = request.form['dateBirth']
+		var_address = request.form['address']
+		var_bloodGroup = request.form['bloodGroup']
+		var_cnp = request.form['cnp']
 		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-		cursor.execute("UPDATE categories_movies.category SET name=%s,target_audience=%s,setting=%s,theme=%s,production=%s WHERE idCategory=%s;",(name, target_audience, setting, theme, production,idcat))
+		cursor.execute("UPDATE blooddonationsystemdb.tbl_donor SET firstName=%s,lastName=%s,date_of_birth=%s,location=%s,bloodGroup=%s,cnp=%s WHERE idDonor=%s;",(var_firstName, var_lastName, var_dateBirth, var_address, var_bloodGroup,var_cnp,donorId))
 		mysql.connection.commit()
 		msg = 'You have successfully updated !'
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('categoryupdate.html', msg = msg)
+	return render_template('updateDonor.html', msg = msg,selectedDonorNameVect=selectedDonorNameVect)
 
 
 @app.route('/movieupdate', methods =['GET', 'POST'])
 def movieupdate():
 	msg = ''
+
 	if request.method == 'POST' and 'idmovie' in request.form and 'title' in request.form and 'pg_rating' in request.form and 'budget' in request.form and 'director' in request.form and 'language' in request.form and 'release_date' in request.form and 'avg_reviews' in request.form and 'length' in request.form:
 		idmovie=request.form['idmovie']
 		title = request.form['title']

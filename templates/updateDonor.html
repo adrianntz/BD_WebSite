@@ -9,9 +9,9 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="text-center">
-                                <img src="https://static.wixstatic.com/media/2cd43b_9f53f4ff66d74565a61fb5b017b33bec~mv2.png/v1/fill/w_320,h_320,q_90/2cd43b_9f53f4ff66d74565a61fb5b017b33bec~mv2.png" alt="car-key" border="0">
-                                <h2 class="text-center">Update Category</h2>
-                                <p>You can update data for a category here.</p>
+                                <img src="https://www.seekpng.com/png/full/790-7900951_blood-donation-png-pic-blood-donation-logo-png.png" alt="car-key" height="400" width="350" border="0">
+                                <h2 class="text-center">New Donor</h2>
+                                <p>You can enter a new blood Donor here.</p>
                                 <form id="register-form" role="form" autocomplete="off" class="form" method="post">
                                     <div class="form-group">
                                         <div class="input-group">
@@ -21,28 +21,39 @@
                                     <div class="form-group">
                                     <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="number" min="0"  name="idcat" placeholder="Enter Category ID" class="form-control" id="idcat" required></br></br>
-                                        <div class="input-group">
-                                            <input type="text" name="name" placeholder="Enter Category Name" class="form-control" id="name" required></br></br>
+
+                                        <select name="donorName" id="donorName">
+                                            <option value="">--Choose Blood Donor to update --</option>
+                                            {% for selectedDonorNameVect in selectedDonorNameVect %}
+                                            <option value="{{selectedDonorNameVect[0]}} {{selectedDonorNameVect[1]}}">{{selectedDonorNameVect[0]}} {{selectedDonorNameVect[1]}} </option>
+                                            {% endfor%}
+                                        </select></br></br>
+
+                                        <input type="text" name="firstName" placeholder="Enter Blood Donor First Name" class="form-control" id="name" required></br></br>
 
                                         </div>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="target_audience" placeholder="Enter Target Audience" class="form-control" id="target_audience" required></br></br>
+                                            <input type="text" name="lastName" placeholder="Enter Blood Donor Last Name" class="form-control" id="target_audience" required></br></br>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
+                                            <input placeholder="Enter Request Date" class="textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" name="dateBirth" id="dateBirth "class="form-control" />
+                                            </br></br>
                                         </div>
 
                                          </div>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="setting" placeholder="Enter  Setting" class="form-control" id="setting" required></br></br>
+                                            <input type="text" name="address" placeholder="Enter Address of Residence" class="form-control" id="address" required></br></br>
 
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="theme" placeholder="Enter Theme" class="form-control" id="theme" required></br></br>
-
+                                            <input type="text" name="bloodGroup" placeholder="Enter Blood Type" class="form-control" id="bloodGroup" required></br></br>
+                                        </div>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="production" placeholder="Enter Type of Production" class="form-control" id="production" required></br></br>
+                                            <input type="number" name="cnp" placeholder="Enter CNP" class="form-control" id="cnp" required></br></br>
                                         </div>
 
 
