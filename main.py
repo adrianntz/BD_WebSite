@@ -1,8 +1,13 @@
 # Store this code in 'app.py' file
+
+from __future__ import print_function # In python 2.7
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
+from flask_debugtoolbar import DebugToolbarExtension
 import re
+import sys
+
 
 
 app = Flask(__name__)
@@ -79,25 +84,44 @@ def seekerCreate():
 		msg = 'Please fill out the form !'
 	return render_template('seekerCreate.html', msg = msg)
 
-@app.route('/screeningintroduce', methods =['GET', 'POST'])
-def screeningintroduce():
+@app.route('/bloodstockCreate', methods =['GET', 'POST'])
+def bloodstockCreate():
 	msg = ''
-	if request.method == 'POST' and 'idmovie' in request.form and 'idcat' in request.form and 'cinema' in request.form and 'ticket_price' in request.form and 'date' in request.form and 'time' in request.form and 'location' in request.form and 'seats_left' in request.form:
-		idmovie = request.form['idmovie']
-		idcat = request.form['idcat']
-		cinema = request.form['cinema']
-		ticket_price = request.form['ticket_price']
-		date = request.form['date']
-		time=request.form['time']
-		location=request.form['location']
-		seats_left=request.form['seats_left']
+	cursor = mysql.connection.cursor()
+	users = cursor.execute("SELECT name FROM blooddonationsystemdb.tbl_bloodbank")
+	if users > 0:
+		bloodBankIdDisplay = cursor.fetchall()
+
+	users=cursor.execute("SELECT * FROM blooddonationsystemdb.tbl_donor")
+	if users > 0:
+		bloodDonorIdDisplay = cursor.fetchall()
+
+	if request.method == 'POST' and 'donorId' in request.form and 'bloodBankId' in request.form and 'quantity' in request.form and 'expirDate' in request.form:
+		var_donorName = request.form['donorId']
+		var_bloodBankName= request.form['bloodBankId']
+		var_quantity = request.form['quantity']
+		var_expirDate = request.form['expirDate']
+		
+		var_donorNameSplitted=var_donorName.split()
+		users0 = cursor.execute("SELECT idDonor FROM blooddonationsystemdb.tbl_donor where firstName = %s", (var_donorNameSplitted[0],))
+		if users0 > 0:
+			var_bloodDonorId = cursor.fetchall()
+
+		users1 = cursor.execute("SELECT idBloodbank FROM blooddonationsystemdb.tbl_bloodbank where name=%s", (var_bloodBankName,))
+		if users1 > 0:
+			var_bloodBankId = cursor.fetchall()
+
+		users2 = cursor.execute("SELECT bloodGroup FROM blooddonationsystemdb.tbl_donor where idDonor=%s",(var_bloodDonorId,))
+		if users2 > 0:
+			var_bloodGroup = cursor.fetchall()
+
 		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-		cursor.execute("INSERT INTO `categories_movies`.`screening` (`idMovie`, `idCategory`, `cinema`, `ticket_price`, `date`, `time`, `location`, `seats_left`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",(idmovie, idcat, cinema, ticket_price, date,time,location,seats_left))
+		cursor.execute("INSERT INTO `blooddonationsystemdb`.`tbl_bloodstock` (`idBloodBank`, `bloodGroup`, `quantity`, `expirationDate`, `donorId`) VALUES (%s,%s,%s,%s,%s)",( var_bloodBankId, var_bloodGroup, var_quantity, var_expirDate,var_bloodDonorId))
 		mysql.connection.commit()
 		msg = 'You have successfully registered !'
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('screeningintroduce.html', msg = msg)
+	return render_template('bloodstockCreate.html', bloodBankIdDisplay = bloodBankIdDisplay,bloodDonorIdDisplay=bloodDonorIdDisplay,msg=msg)
 
 @app.route('/categoriesdisplay')
 def categoriesdisplay():
@@ -232,6 +256,9 @@ def moviesANDscreeningdisplay():
         displayVector=cursor.fetchall()
         return render_template('moviesANDscreeningdisplay.html',displayVector=displayVector)
 
+app.debug = True
+
+toolbar = DebugToolbarExtension(app)
 
 if __name__ == "__main__":
-	app.run(host ="localhost", port = int("5000"))
+	app.run(host ="localhost", port = int("5000"),debug=True)
