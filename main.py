@@ -202,6 +202,14 @@ def readBloodstock():
         displayVector=cursor.fetchall()
         return render_template('readBloodstock.html',displayVector=displayVector)
 
+@app.route('/readRequests')
+def readRequests():
+    cursor = mysql.connection.cursor()
+    users=cursor.execute("select r.requestDate, concat(concat(s.firstName,' '), s.lastName),r.quantity,bb.name,r.approved from tbl_request r inner join tbl_seeker s on r.idSeeker = s.idSeeker inner join tbl_bloodbank bb on r.idBloodBank=bb.idBloodbank;")
+    if users>0:
+        displayVector=cursor.fetchall()
+        return render_template('readRequests.html',displayVector=displayVector)
+
 @app.route('/categorydelete', methods =['GET', 'POST'])
 def categorydelete():
 	msg = ''
