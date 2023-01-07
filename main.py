@@ -27,7 +27,7 @@ mysql = MySQL(app)
 
 @app.route('/')
 
-@app.route("/index")
+@app.route("/index/")
 def index():
 	return render_template("index.html")
 
@@ -194,6 +194,14 @@ def readBloodBanks():
         displayVector=cursor.fetchall()
         return render_template('readBloodBanks.html',displayVector=displayVector)
 
+@app.route('/readBloodstock')
+def readBloodstock():
+    cursor = mysql.connection.cursor()
+    users=cursor.execute("SELECT bb.name, bs.bloodGroup, bs.quantity, bs.expirationDate, concat(concat(d.firstName,' '),d.lastName) FROM blooddonationsystemdb.tbl_bloodbank bb inner join blooddonationsystemdb.tbl_bloodstock bs on bs.idBloodBank = bb.idBloodbank inner join blooddonationsystemdb.tbl_donor d on bs.donorId=d.idDonor;")
+    if users>0:
+        displayVector=cursor.fetchall()
+        return render_template('readBloodstock.html',displayVector=displayVector)
+
 @app.route('/categorydelete', methods =['GET', 'POST'])
 def categorydelete():
 	msg = ''
@@ -298,7 +306,7 @@ def screeningupdate():
 @app.route('/moviesANDscreeningdisplay')
 def moviesANDscreeningdisplay():
     cursor = mysql.connection.cursor()
-    users=cursor.execute("SELECT m.Title, m.pg_rating, m.Language,m.length,s.cinema,s.location,s.date,s.time,s.ticket_price, s.seats_left FROM categories_movies.movie m inner join categories_movies.screening s using (idMovie);")
+    users=cursor.execute("SELECT m.Title, m.pg_rating, m.Language,m.length,s.cinema,s.location,s.date,s.time,s.ticket_price, s.seats_left FROM categories_movies.movie m inner join categories_movies.screening s using (idMo;")
     if users>0:
         displayVector=cursor.fetchall()
         return render_template('moviesANDscreeningdisplay.html',displayVector=displayVector)
