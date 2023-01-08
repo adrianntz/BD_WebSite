@@ -210,44 +210,6 @@ def readRequests():
         displayVector=cursor.fetchall()
         return render_template('readRequests.html',displayVector=displayVector)
 
-@app.route('/categorydelete', methods =['GET', 'POST'])
-def categorydelete():
-	msg = ''
-	if request.method == 'POST' and 'idcat' in request.form:
-		idcat=request.form['idcat']
-		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-		cursor.execute("delete from categories_movies.category where idCategory=%s;", (idcat,))
-		mysql.connection.commit()
-		msg = 'You have successfully deleted'
-	elif request.method == 'POST':
-		msg = 'Please fill out the form !'
-	return render_template("categorydelete.html",msg=msg)
-
-@app.route('/moviedelete', methods =['GET', 'POST'])
-def moviedelete():
-	msg = ''
-	if request.method == 'POST' and 'idmovie' in request.form:
-		idmovie=request.form['idmovie']
-		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-		cursor.execute("delete from categories_movies.movie where idMovie=%s;", (idmovie,))
-		mysql.connection.commit()
-		msg = 'You have successfully deleted'
-	elif request.method == 'POST':
-		msg = 'Please fill out the form !'
-	return render_template("moviedelete.html",msg=msg)
-
-@app.route('/screeningdelete', methods =['GET', 'POST'])
-def screeningdelete():
-	msg = ''
-	if request.method == 'POST' and 'idscreening' in request.form:
-		idscreening=request.form['idscreening']
-		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-		cursor.execute("delete from categories_movies.screening where idScreening=%s;", (idscreening,))
-		mysql.connection.commit()
-		msg = 'You have successfully deleted'
-	elif request.method == 'POST':
-		msg = 'Please fill out the form !'
-	return render_template("screeningdelete.html",msg=msg)
 
 @app.route('/updateDonor', methods=['GET','POST'])
 def updateDonor():
@@ -378,7 +340,7 @@ def updateBloodstock():
 def updateRequests():
 	msg = ''
 	cursor = mysql.connection.cursor()
-	users = cursor.execute("SELECT idRequest FROM blooddonationsystemdb.tbl_request")
+	users = cursor.execute("select r.idRequest,r.requestDate, concat(concat(s.firstName,' '), s.lastName),r.quantity,bb.name,r.approved from tbl_request r inner join tbl_seeker s on r.idSeeker = s.idSeeker inner join tbl_bloodbank bb on r.idBloodBank=bb.idBloodbank;")
 	if users > 0:
 		requestIdDIsplay = cursor.fetchall()
 
@@ -514,51 +476,19 @@ def deleteBloodstock():
 def deleteRequest():
 	msg = ''
 	cursor = mysql.connection.cursor()
-	users = cursor.execute("SELECT idRequest FROM blooddonationsystemdb.tbl_request")
+	users = cursor.execute("select r.idRequest,r.requestDate, concat(concat(s.firstName,' '), s.lastName),r.quantity,bb.name,r.approved from tbl_request r inner join tbl_seeker s on r.idSeeker = s.idSeeker inner join tbl_bloodbank bb on r.idBloodBank=bb.idBloodbank;")
 	if users > 0:
 		requestIdDIsplay = cursor.fetchall()
 
-	users = cursor.execute("SELECT * FROM blooddonationsystemdb.tbl_seeker")
-	if users > 0:
-		seekerIdDisplay = cursor.fetchall()
-
-	users = cursor.execute("SELECT name FROM blooddonationsystemdb.tbl_bloodbank")
-	if users > 0:
-		bloodBankIdDisplay = cursor.fetchall()
-
-	if request.method == 'POST' and 'seekerId' in request.form and 'bloodBankId' in request.form and 'approval' in request.form and 'reqDate' in request.form:
+	if request.method == 'POST' and 'requestId' in request.form:
 		var_selectedId=request.form['requestId']
-		var_seekerName = request.form['seekerId']
-		var_bloodBankName = request.form['bloodBankId']
-		var_approval = request.form['approval']
-		var_reqDate = request.form['reqDate']
-		var_seekerNameSplitted = var_seekerName.split()
-		users0 = cursor.execute("SELECT idSeeker FROM blooddonationsystemdb.tbl_seeker where firstName = %s and LastName=%s",(var_seekerNameSplitted[0],var_seekerNameSplitted[1]))
-		if users0 > 0:
-			var_seekerId = cursor.fetchall()
-
-		users1 = cursor.execute("SELECT idBloodbank FROM blooddonationsystemdb.tbl_bloodbank where name=%s",(var_bloodBankName,))
-		if users1 > 0:
-			var_bloodBankId = cursor.fetchall()
-
-		users2 = cursor.execute("SELECT blodGroup FROM blooddonationsystemdb.tbl_seeker where idSeeker=%s",(var_seekerId,))
-		if users2 > 0:
-			var_bloodGroup = cursor.fetchall()
-
-		users3 = cursor.execute("SELECT quantity FROM blooddonationsystemdb.tbl_bloodstock where bloodGroup=%s order by expirationDate desc",(var_bloodGroup,))
-		if users3 > 0:
-			var_bloodQuantity = cursor.fetchall()
-			cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-			cursor.execute("UPDATE blooddonationsystemdb.tbl_request SET `requestDate`=%s, `idSeeker`=%s, `quantity`=%s, `idBloodBank`=%s, `Approved`=%s where idRequest=%s",(var_reqDate, var_seekerId, var_bloodQuantity, var_bloodBankId, var_approval,var_selectedId))
-			mysql.connection.commit()
-			msg = 'You have successfully registered !'
-		else:
-			flash('No blood bag with requiered blood group in stock!')
-
-
+		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+		cursor.execute("delete from  blooddonationsystemdb.tbl_request where idRequest=%s",(var_selectedId,))
+		mysql.connection.commit()
+		msg = 'You have successfully registered !'
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('deleteRequest.html', seekerIdDisplay=seekerIdDisplay,   bloodBankIdDisplay=bloodBankIdDisplay,requestIdDIsplay=requestIdDIsplay, msg=msg)
+	return render_template('deleteRequest.html',requestIdDIsplay=requestIdDIsplay, msg=msg)
 
 app.debug = True
 

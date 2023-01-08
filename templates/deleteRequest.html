@@ -10,8 +10,8 @@
                         <div class="panel-body">
                             <div class="text-center">
                                 <img src="https://cdn-icons-png.flaticon.com/512/4493/4493067.png" height=250 width-=250 alt="car-key" border="0">
-                                <h2 class="text-center">Update Blood Request</h2>
-                                <p>You can update blood request data here.</p>
+                                <h2 class="text-center">Delete Blood Request</h2>
+                                <p>You can delete blood request data here.</p>
                                 <form id="register-form" role="form" autocomplete="off" class="form" method="post">
                                     <div class="form-group">
                                         <div class="input-group">
@@ -22,38 +22,17 @@
                                     <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
                                         <select name="requestId" id="requestId">
-                                            <option value="">--Choose Blood Stock ID No. to update --</option>
+                                            <option value="">--Choose Blood Stock ID No. to delete --</option>
                                             {% for requestIdVector in requestIdDIsplay %}
-                                                <option value="{{requestIdVector[0]}}">{{requestIdVector[0]}} </option>
-                                            {% endfor%}
-                                        </select></br></br>
-                                        <select name="seekerId" id="seekerId">
-                                            <option value="">--Choose Blood Seeker --</option>
-                                            {% for seekerIdVector in seekerIdDisplay %}
-                                                <option value="{{seekerIdVector[1]}} {{seekerIdVector[2]}}">{{seekerIdVector[1]}} {{seekerIdVector[2]}} </option>
-                                            {% endfor%}
-                                        </select></br></br>
-                                        <select name="bloodBankId" id="bloodBankId">
-                                            <option value="">--Choose Blood Bank --</option>
-                                            {% for bloodBankIdVector in bloodBankIdDisplay %}
-                                                <option value="{{bloodBankIdVector[0]}}">{{bloodBankIdVector[0]}} </option>
+                                                <option value="{{requestIdVector[0]}}"> RequestID: {{requestIdVector[0]}} {{requestIdVector[1]}} Seeker: {{requestIdVector[2]}} {{requestIdVector[3]}}L Bank: {{requestIdVector[4]}} Approval:{{requestIdVector[5]}}</option>
                                             {% endfor%}
                                         </select></br></br>
 
-                                        <select name="approval" id="approval">
-                                            <option value="">--Choose Approval for request --</option>
-                                                <option value="0">Unapproved </option>
-                                                <option value="1">Approved </option>
-                                        </select></br></br>
-                                        <div class="input-group">
-                                            <input placeholder="Enter Request Date" class="textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" name="reqDate" id="expirDate"class="form-control" />
-                                            </br></br>
-                                        </div>
                                     </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <input name="btnForget" class="btn btn-lg btn-primary btn-block btnForget" value="Submit Data" type="submit">
+                                        <input name="btnForget" class="btn btn-lg btn-danger btn-block btnForget" value="Delete Data" type="submit">
                                     </div>
 
                                 </form>
