@@ -436,17 +436,14 @@ def deleteSeekers():
 def deleteBloodBanks():
 	msg=''
 	cursor = mysql.connection.cursor()
-	users = cursor.execute("SELECT name FROM blooddonationsystemdb.tbl_bloodbank")
+	users = cursor.execute("SELECT idBloodBank,name FROM blooddonationsystemdb.tbl_bloodbank")
 	if users > 0:
 		selectedBankNameVect = cursor.fetchall()
 
-	if request.method == 'POST' and 'bankName' in request.form:
-		var_selectedBank=request.form['bankName']
-		users = cursor.execute("SELECT idBloodbank FROM blooddonationsystemdb.tbl_bloodbank where name=%s", (var_selectedBank,))
-		if users > 0:
-			bankId = cursor.fetchall()
+	if request.method == 'POST' and 'bankId' in request.form:
+		var_selectedBankID=request.form['bankId']
 		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-		cursor.execute("delete from  blooddonationsystemdb.tbl_bloodbank WHERE idBloodbank=%s;",(bankId,))
+		cursor.execute("delete from  blooddonationsystemdb.tbl_bloodbank WHERE idBloodbank=%s;",(var_selectedBankID,))
 		mysql.connection.commit()
 		msg = 'You have successfully updated !'
 	elif request.method == 'POST':

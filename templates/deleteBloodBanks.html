@@ -18,10 +18,10 @@
 
                                         </div>
                                     </div>
-                                    <select name="bankName" id="bankName">
+                                    <select name="bankId" id="bankId">
                                             <option value="">--Choose Blood Bank to delete --</option>
                                             {% for selectedBankNameVect in selectedBankNameVect %}
-                                            <option value="{{selectedBankNameVect[0]}}">{{selectedBankNameVect[0]}} </option>
+                                            <option value="{{selectedBankNameVect[0]}}">{{selectedBankNameVect[1]}} </option>
                                             {% endfor%}
                                     </select></br></br>
 
