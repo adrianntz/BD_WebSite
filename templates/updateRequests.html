@@ -24,7 +24,7 @@
                                         <select name="requestId" id="requestId">
                                             <option value="">--Choose Blood Stock ID No. to update --</option>
                                             {% for requestIdVector in requestIdDIsplay %}
-                                                <option value="{{requestIdVector[0]}}">{{requestIdVector[0]}} </option>
+                                                <option value="{{requestIdVector[0]}}"> RequestID: {{requestIdVector[0]}} {{requestIdVector[1]}} Seeker: {{requestIdVector[2]}} {{requestIdVector[3]}}L Bank: {{requestIdVector[4]}} Approval:{{requestIdVector[5]}}</option>
                                             {% endfor%}
                                         </select></br></br>
                                         <select name="seekerId" id="seekerId">

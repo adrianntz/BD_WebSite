@@ -9,9 +9,9 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="text-center">
-                                <img src="https://cdn-icons-png.flaticon.com/512/1297/1297136.png" width=300 height=300 alt="car-key" border="0">
-                                <h2 class="text-center">Add Blood Bank</h2>
-                                <p>You can enter a new Blood Bank here.</p>
+                                <img src="https://cdn-icons-png.flaticon.com/512/4493/4493067.png" height=250 width-=250 alt="car-key" border="0">
+                                <h2 class="text-center">Delete Blood Stock</h2>
+                                <p>You can delete blood stock data here.</p>
                                 <form id="register-form" role="form" autocomplete="off" class="form" method="post">
                                     <div class="form-group">
                                         <div class="input-group">
@@ -19,29 +19,20 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="input-group">
+                                    <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="name" placeholder="Enter Blood Bank Name" class="form-control" id="name" required></br></br>
-
-                                        </div>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="address" placeholder="Enter Address" class="form-control" id="address" required></br></br>
-                                        </div>
-
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="email" placeholder="Enter contact E-mail" class="form-control" id="email" required></br></br>
-
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="phone" placeholder="Enter contact phone number" class="form-control" id="phone" required></br></br>
-                                        </div>
-
+                                        <select name="bloodBagId" id="bloodBagId">
+                                            <option value="">--Choose Blood Stock ID No. to update --</option>
+                                            {% for bloodBagIdVector in bloodBagIdDisplay %}
+                                                <option value="{{bloodBagIdVector[0]}}">ID: {{bloodBagIdVector[0]}} Bank: {{bloodBagIdVector[1]}} {{bloodBagIdVector[2]}} {{bloodBagIdVector[3]}}L {{bloodBagIdVector[4]}} Donor: {{bloodBagIdVector[5]}}</option>
+                                            {% endfor%}
+                                        </select></br></br>
 
                                     </div>
+                                    </div>
+
                                     <div class="form-group">
-                                        <input name="btnForget" class="btn btn-lg btn-primary btn-block btnForget" value="Submit Data" type="submit">
+                                        <input name="btnForget" class="btn btn-lg btn-danger btn-block btnForget" value="Delete Data" type="submit">
                                     </div>
 
                                 </form>
@@ -62,3 +53,4 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<body></body>

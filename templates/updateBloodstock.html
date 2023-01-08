@@ -10,8 +10,8 @@
                         <div class="panel-body">
                             <div class="text-center">
                                 <img src="https://cdn-icons-png.flaticon.com/512/4493/4493067.png" height=250 width-=250 alt="car-key" border="0">
-                                <h2 class="text-center">New Blood Stock</h2>
-                                <p>You can enter new blood stock here.</p>
+                                <h2 class="text-center">Update Blood Stock</h2>
+                                <p>You can update blood stock data here.</p>
                                 <form id="register-form" role="form" autocomplete="off" class="form" method="post">
                                     <div class="form-group">
                                         <div class="input-group">
@@ -24,7 +24,7 @@
                                         <select name="bloodBagId" id="bloodBagId">
                                             <option value="">--Choose Blood Stock ID No. to update --</option>
                                             {% for bloodBagIdVector in bloodBagIdDisplay %}
-                                                <option value="{{bloodBagIdVector[0]}}">{{bloodBagIdVector[0]}} </option>
+                                                <option value="{{bloodBagIdVector[0]}}">ID: {{bloodBagIdVector[0]}} Bank: {{bloodBagIdVector[1]}} {{bloodBagIdVector[2]}} {{bloodBagIdVector[3]}}L {{bloodBagIdVector[4]}} Donor: {{bloodBagIdVector[5]}}</option>
                                             {% endfor%}
                                         </select></br></br>
                                         <select name="donorId" id="donorId">

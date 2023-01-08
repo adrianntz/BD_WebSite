@@ -9,9 +9,9 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="text-center">
-                                <img src="https://static.wixstatic.com/media/2cd43b_28092b91a3f34abb9746689077c6ac76~mv2.jpg/v1/fill/w_320,h_320,q_90/2cd43b_28092b91a3f34abb9746689077c6ac76~mv2.jpg" alt="car-key" border="0">
-                                <h2 class="text-center">Delete Movie</h2>
-                                <p>You can delete movie data here.</p>
+                                <img src="https://cdn-icons-png.flaticon.com/512/4493/4493067.png" height=250 width-=250 alt="car-key" border="0">
+                                <h2 class="text-center">Delete Blood Request</h2>
+                                <p>You can delete blood request data here.</p>
                                 <form id="register-form" role="form" autocomplete="off" class="form" method="post">
                                     <div class="form-group">
                                         <div class="input-group">
@@ -21,15 +21,18 @@
                                     <div class="form-group">
                                     <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="number" min="0"  name="idmovie" placeholder="Enter Movie ID" class="form-control" id="idmovie" required></br></br>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
+                                        <select name="requestId" id="requestId">
+                                            <option value="">--Choose Blood Stock ID No. to delete --</option>
+                                            {% for requestIdVector in requestIdDIsplay %}
+                                                <option value="{{requestIdVector[0]}}"> RequestID: {{requestIdVector[0]}} {{requestIdVector[1]}} Seeker: {{requestIdVector[2]}} {{requestIdVector[3]}}L Bank: {{requestIdVector[4]}} Approval:{{requestIdVector[5]}}</option>
+                                            {% endfor%}
+                                        </select></br></br>
 
-
-                                        </div>
                                     </div>
+                                    </div>
+
                                     <div class="form-group">
-                                        <input name="btnForget" class="btn btn-lg btn-danger btn-block btnForget" value="Confirm Deletion" type="submit">
+                                        <input name="btnForget" class="btn btn-lg btn-danger btn-block btnForget" value="Delete Data" type="submit">
                                     </div>
 
                                 </form>
@@ -50,3 +53,4 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<body></body>
