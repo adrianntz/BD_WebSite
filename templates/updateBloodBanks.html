@@ -9,44 +9,42 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="text-center">
-                                <img src="https://static.wixstatic.com/media/2cd43b_9f53f4ff66d74565a61fb5b017b33bec~mv2.png/v1/fill/w_320,h_320,q_90/2cd43b_9f53f4ff66d74565a61fb5b017b33bec~mv2.png" alt="car-key" border="0">
-                                <h2 class="text-center">Update Category</h2>
-                                <p>You can update data for a category here.</p>
+                                <img src="https://cdn-icons-png.flaticon.com/512/1297/1297136.png" alt="car-key" border="0">
+                                <h2 class="text-center">Update Blood Bank</h2>
+                                <p>You can enter update Blood Bank Data here.</p>
                                 <form id="register-form" role="form" autocomplete="off" class="form" method="post">
                                     <div class="form-group">
                                         <div class="input-group">
 
                                         </div>
                                     </div>
+                                    <select name="bankName" id="bankName">
+                                            <option value="">--Choose Blood Bank to update --</option>
+                                            {% for selectedBankNameVect in selectedBankNameVect %}
+                                            <option value="{{selectedBankNameVect[0]}}">{{selectedBankNameVect[0]}} </option>
+                                            {% endfor%}
+                                    </select></br></br>
                                     <div class="form-group">
-                                    <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="number" min="0"  name="idcat" placeholder="Enter Category ID" class="form-control" id="idcat" required></br></br>
                                         <div class="input-group">
-                                            <input type="text" name="name" placeholder="Enter Category Name" class="form-control" id="name" required></br></br>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
+                                            <input type="text" name="name" placeholder="Enter Blood Bank Name" class="form-control" id="name" required></br></br>
 
                                         </div>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="target_audience" placeholder="Enter Target Audience" class="form-control" id="target_audience" required></br></br>
+                                            <input type="text" name="address" placeholder="Enter Address" class="form-control" id="address" required></br></br>
                                         </div>
-
-                                         </div>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="setting" placeholder="Enter  Setting" class="form-control" id="setting" required></br></br>
 
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="theme" placeholder="Enter Theme" class="form-control" id="theme" required></br></br>
+                                            <input type="text" name="email" placeholder="Enter contact E-mail" class="form-control" id="email" required></br></br>
 
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="text" name="production" placeholder="Enter Type of Production" class="form-control" id="production" required></br></br>
+                                            <input type="text" name="phone" placeholder="Enter contact phone number" class="form-control" id="phone" required></br></br>
                                         </div>
 
 
-                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <input name="btnForget" class="btn btn-lg btn-primary btn-block btnForget" value="Submit Data" type="submit">

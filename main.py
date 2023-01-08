@@ -249,75 +249,183 @@ def screeningdelete():
 		msg = 'Please fill out the form !'
 	return render_template("screeningdelete.html",msg=msg)
 
-@app.route('/categoryupdate', methods=['GET','POST'])
-def categoryupdate():
+@app.route('/updateDonor', methods=['GET','POST'])
+def updateDonor():
 	msg=''
-	if request.method == 'POST' and 'idcat' in request.form and 'name' in request.form and 'target_audience' in request.form and 'setting' in request.form and 'theme' in request.form and 'production' in request.form:
-		idcat=request.form['idcat']
-		name = request.form['name']
-		target_audience = request.form['target_audience']
-		setting = request.form['setting']
-		theme = request.form['theme']
-		production = request.form['production']
+	cursor = mysql.connection.cursor()
+	users = cursor.execute("SELECT firstName,lastname FROM blooddonationsystemdb.tbl_donor")
+	if users > 0:
+		selectedDonorNameVect = cursor.fetchall()
+
+
+
+
+	if request.method == 'POST' and 'firstName' in request.form and 'lastName' in request.form and 'dateBirth' in request.form and 'address' in request.form and 'bloodGroup' in request.form and 'cnp' in request.form:
+		var_selectedName=request.form['donorName']
+		var_selectedName=var_selectedName.split()
+		users = cursor.execute("SELECT idDonor FROM blooddonationsystemdb.tbl_donor where firstName=%s and lastName=%s", (var_selectedName[0], var_selectedName[1]))
+		if users > 0:
+			donorId = cursor.fetchall()
+		var_firstName = request.form['firstName']
+		var_lastName = request.form['lastName']
+		var_dateBirth = request.form['dateBirth']
+		var_address = request.form['address']
+		var_bloodGroup = request.form['bloodGroup']
+		var_cnp = request.form['cnp']
 		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-		cursor.execute("UPDATE categories_movies.category SET name=%s,target_audience=%s,setting=%s,theme=%s,production=%s WHERE idCategory=%s;",(name, target_audience, setting, theme, production,idcat))
+		cursor.execute("UPDATE blooddonationsystemdb.tbl_donor SET firstName=%s,lastName=%s,date_of_birth=%s,location=%s,bloodGroup=%s,cnp=%s WHERE idDonor=%s;",(var_firstName, var_lastName, var_dateBirth, var_address, var_bloodGroup,var_cnp,donorId))
 		mysql.connection.commit()
 		msg = 'You have successfully updated !'
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('categoryupdate.html', msg = msg)
+	return render_template('updateDonor.html', msg = msg,selectedDonorNameVect=selectedDonorNameVect)
 
 
-@app.route('/movieupdate', methods =['GET', 'POST'])
-def movieupdate():
+@app.route('/updateSeekers', methods=['GET','POST'])
+def updateSeekers():
+	msg=''
+	cursor = mysql.connection.cursor()
+	users = cursor.execute("SELECT firstName,lastname FROM blooddonationsystemdb.tbl_seeker")
+	if users > 0:
+		selectedDonorNameVect = cursor.fetchall()
+
+	if request.method == 'POST' and 'firstName' in request.form and 'lastName' in request.form and 'dateBirth' in request.form and 'address' in request.form and 'bloodGroup' in request.form and 'cnp' in request.form:
+		var_selectedName=request.form['donorName']
+		var_selectedName=var_selectedName.split()
+		users = cursor.execute("SELECT idSeeker FROM blooddonationsystemdb.tbl_seeker where firstName=%s and lastName=%s", (var_selectedName[0], var_selectedName[1]))
+		if users > 0:
+			donorId = cursor.fetchall()
+		var_firstName = request.form['firstName']
+		var_lastName = request.form['lastName']
+		var_dateBirth = request.form['dateBirth']
+		var_address = request.form['address']
+		var_bloodGroup = request.form['bloodGroup']
+		var_cnp = request.form['cnp']
+		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+		cursor.execute("UPDATE blooddonationsystemdb.tbl_seeker SET firstName=%s,lastName=%s,date_of_birth=%s,location=%s,blodGroup=%s,cnp=%s WHERE idSeeker=%s;",(var_firstName, var_lastName, var_dateBirth, var_address, var_bloodGroup,var_cnp,donorId))
+		mysql.connection.commit()
+		msg = 'You have successfully updated !'
+	elif request.method == 'POST':
+		msg = 'Please fill out the form !'
+	return render_template('updateSeekers.html', msg = msg,selectedDonorNameVect=selectedDonorNameVect)
+
+@app.route('/updateBloodBanks', methods=['GET','POST'])
+def updateBloodBanks():
+	msg=''
+	cursor = mysql.connection.cursor()
+	users = cursor.execute("SELECT name FROM blooddonationsystemdb.tbl_bloodbank")
+	if users > 0:
+		selectedBankNameVect = cursor.fetchall()
+
+	if request.method == 'POST' and 'name' in request.form and 'address' in request.form and 'email' in request.form and 'phone' in request.form:
+		var_selectedBank=request.form['bankName']
+		var_name = request.form['name']
+		var_address = request.form['address']
+		var_email = request.form['email']
+		var_phone = request.form['phone']
+		users = cursor.execute("SELECT idBloodbank FROM blooddonationsystemdb.tbl_bloodbank where name=%s", (var_selectedBank,))
+		if users > 0:
+			bankId = cursor.fetchall()
+		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+		cursor.execute("UPDATE blooddonationsystemdb.tbl_bloodbank SET name=%s,address=%s,email=%s,phone_number=%s WHERE idBloodbank=%s;",(var_name, var_address, var_email, var_phone, bankId))
+		mysql.connection.commit()
+		msg = 'You have successfully updated !'
+	elif request.method == 'POST':
+		msg = 'Please fill out the form !'
+	return render_template('updateBloodBanks.html', msg = msg,selectedBankNameVect=selectedBankNameVect)
+
+
+@app.route('/updateBloodstock', methods=['GET', 'POST'])
+def updateBloodstock():
 	msg = ''
-	if request.method == 'POST' and 'idmovie' in request.form and 'title' in request.form and 'pg_rating' in request.form and 'budget' in request.form and 'director' in request.form and 'language' in request.form and 'release_date' in request.form and 'avg_reviews' in request.form and 'length' in request.form:
-		idmovie=request.form['idmovie']
-		title = request.form['title']
-		pg_rating = request.form['pg_rating']
-		budget = request.form['budget']
-		director = request.form['director']
-		language = request.form['language']
-		release_date = request.form['release_date']
-		avg_reviews = request.form['avg_reviews']
-		length = request.form['length']
+	cursor = mysql.connection.cursor()
+	users=cursor.execute("select idBloodBag from blooddonationsystemdb.tbl_bloodstock")
+	if users>0:
+		bloodBagIdDisplay= cursor.fetchall()
+	users = cursor.execute("SELECT name FROM blooddonationsystemdb.tbl_bloodbank")
+	if users > 0:
+		bloodBankIdDisplay = cursor.fetchall()
+
+	users = cursor.execute("SELECT * FROM blooddonationsystemdb.tbl_donor")
+	if users > 0:
+		bloodDonorIdDisplay = cursor.fetchall()
+
+	if request.method == 'POST' and 'donorId' in request.form and 'bloodBankId' in request.form and 'quantity' in request.form and 'expirDate' in request.form:
+		var_bloodBagId=request.form['bloodBagId']
+		var_donorName = request.form['donorId']
+		var_bloodBankName = request.form['bloodBankId']
+		var_quantity = request.form['quantity']
+		var_expirDate = request.form['expirDate']
+		var_donorNameSplitted = var_donorName.split()
+		users0 = cursor.execute("SELECT idDonor FROM blooddonationsystemdb.tbl_donor where firstName = %s and lastName=%s",(var_donorNameSplitted[0], var_donorNameSplitted[1]))
+		if users0 > 0:
+			var_bloodDonorId = cursor.fetchall()
+
+		users1 = cursor.execute("SELECT idBloodbank FROM blooddonationsystemdb.tbl_bloodbank where name=%s",(var_bloodBankName,))
+		if users1 > 0:
+			var_bloodBankId = cursor.fetchall()
+
+		users2 = cursor.execute("SELECT bloodGroup FROM blooddonationsystemdb.tbl_donor where idDonor=%s",(var_bloodDonorId,))
+		if users2 > 0:
+			var_bloodGroup = cursor.fetchall()
+
 		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-		cursor.execute("UPDATE `categories_movies`.`movie` SET `Title` = %s, `pg_rating` = %s, `budget` = %s, `Director` = %s, `Language` = %s, `release_date` = %s, `average_reviews` = %s, `length` = %s WHERE (`idMovie` = %s);",(title, pg_rating, budget, director, language, release_date, avg_reviews, length,idmovie))
+		cursor.execute("UPDATE blooddonationsystemdb.tbl_bloodstock SET idBloodBank=%s,bloodGroup=%s,quantity=%s,expirationDate=%s,donorId=%s WHERE idBloodBag=%s;",(var_bloodBankId, var_bloodGroup, var_quantity, var_expirDate, var_bloodDonorId,var_bloodBagId))
 		mysql.connection.commit()
-		msg = 'You have successfully updated !'
+		msg = 'You have successfully registered !'
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('movieupdate.html', msg = msg)
+	return render_template('updateBloodstock.html', bloodBankIdDisplay=bloodBankIdDisplay,bloodDonorIdDisplay=bloodDonorIdDisplay, bloodBagIdDisplay=bloodBagIdDisplay,msg=msg)
 
-@app.route('/screeningupdate', methods =['GET', 'POST'])
-def screeningupdate():
+@app.route('/updateRequests', methods=['GET', 'POST'])
+def updateRequests():
 	msg = ''
-	if request.method == 'POST' and 'idScreening' in request.form and 'idmovie' in request.form and 'idcat' in request.form and 'cinema' in request.form and 'ticket_price' in request.form and 'date' in request.form and 'time' in request.form and 'location' in request.form and 'seats_left' in request.form:
-		idscreening=request.form['idScreening']
-		idMovie = request.form['idmovie']
-		idCat = request.form['idcat']
-		cinema = request.form['cinema']
-		ticket_price = request.form['ticket_price']
-		date = request.form['date']
-		time = request.form['time']
-		location = request.form['location']
-		seats_left = request.form['seats_left']
-		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-		cursor.execute("UPDATE `categories_movies`.`screening` SET `idMovie` = %s, `idCategory` = %s, `cinema`= %s, `ticket_price` = %s, `date` = %s, `time` = %s, `location` = %s, `seats_left` = %s WHERE (`idScreening` = %s);",(idMovie, idCat, cinema, ticket_price, date, time, location, seats_left,idscreening))
-		mysql.connection.commit()
-		msg = 'You have successfully updated !'
+	cursor = mysql.connection.cursor()
+	users = cursor.execute("SELECT idRequest FROM blooddonationsystemdb.tbl_request")
+	if users > 0:
+		requestIdDIsplay = cursor.fetchall()
+
+	users = cursor.execute("SELECT * FROM blooddonationsystemdb.tbl_seeker")
+	if users > 0:
+		seekerIdDisplay = cursor.fetchall()
+
+	users = cursor.execute("SELECT name FROM blooddonationsystemdb.tbl_bloodbank")
+	if users > 0:
+		bloodBankIdDisplay = cursor.fetchall()
+
+	if request.method == 'POST' and 'seekerId' in request.form and 'bloodBankId' in request.form and 'approval' in request.form and 'reqDate' in request.form:
+		var_selectedId=request.form['requestId']
+		var_seekerName = request.form['seekerId']
+		var_bloodBankName = request.form['bloodBankId']
+		var_approval = request.form['approval']
+		var_reqDate = request.form['reqDate']
+		var_seekerNameSplitted = var_seekerName.split()
+		users0 = cursor.execute("SELECT idSeeker FROM blooddonationsystemdb.tbl_seeker where firstName = %s and LastName=%s",(var_seekerNameSplitted[0],var_seekerNameSplitted[1]))
+		if users0 > 0:
+			var_seekerId = cursor.fetchall()
+
+		users1 = cursor.execute("SELECT idBloodbank FROM blooddonationsystemdb.tbl_bloodbank where name=%s",(var_bloodBankName,))
+		if users1 > 0:
+			var_bloodBankId = cursor.fetchall()
+
+		users2 = cursor.execute("SELECT blodGroup FROM blooddonationsystemdb.tbl_seeker where idSeeker=%s",(var_seekerId,))
+		if users2 > 0:
+			var_bloodGroup = cursor.fetchall()
+
+		users3 = cursor.execute("SELECT quantity FROM blooddonationsystemdb.tbl_bloodstock where bloodGroup=%s order by expirationDate desc",(var_bloodGroup,))
+		if users3 > 0:
+			var_bloodQuantity = cursor.fetchall()
+			cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+			cursor.execute("UPDATE blooddonationsystemdb.tbl_request SET `requestDate`=%s, `idSeeker`=%s, `quantity`=%s, `idBloodBank`=%s, `Approved`=%s where idRequest=%s",(var_reqDate, var_seekerId, var_bloodQuantity, var_bloodBankId, var_approval,var_selectedId))
+			mysql.connection.commit()
+			msg = 'You have successfully registered !'
+		else:
+			flash('No blood bag with requiered blood group in stock!')
+
+
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('screeningupdate.html', msg = msg)
-
-
-@app.route('/moviesANDscreeningdisplay')
-def moviesANDscreeningdisplay():
-    cursor = mysql.connection.cursor()
-    users=cursor.execute("SELECT m.Title, m.pg_rating, m.Language,m.length,s.cinema,s.location,s.date,s.time,s.ticket_price, s.seats_left FROM categories_movies.movie m inner join categories_movies.screening s using (idMo;")
-    if users>0:
-        displayVector=cursor.fetchall()
-        return render_template('moviesANDscreeningdisplay.html',displayVector=displayVector)
+	return render_template('updateRequests.html', seekerIdDisplay=seekerIdDisplay,   bloodBankIdDisplay=bloodBankIdDisplay,requestIdDIsplay=requestIdDIsplay, msg=msg)
 
 app.debug = True
 
