@@ -24,7 +24,7 @@
                                         <select name="bloodBagId" id="bloodBagId">
                                             <option value="">--Choose Blood Stock ID No. to update --</option>
                                             {% for bloodBagIdVector in bloodBagIdDisplay %}
-                                                <option value="{{bloodBagIdVector[0]}}">{{bloodBagIdVector[0]}} </option>
+                                                <option value="{{bloodBagIdVector[0]}}">ID: {{bloodBagIdVector[0]}} Bank: {{bloodBagIdVector[1]}} {{bloodBagIdVector[2]}} {{bloodBagIdVector[3]}}L {{bloodBagIdVector[4]}} Donor: {{bloodBagIdVector[5]}}</option>
                                             {% endfor%}
                                         </select></br></br>
                                         <select name="donorId" id="donorId">

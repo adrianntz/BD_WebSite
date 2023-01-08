@@ -197,7 +197,7 @@ def readBloodBanks():
 @app.route('/readBloodstock')
 def readBloodstock():
     cursor = mysql.connection.cursor()
-    users=cursor.execute("SELECT bb.name, bs.bloodGroup, bs.quantity, bs.expirationDate, concat(concat(d.firstName,' '),d.lastName) FROM blooddonationsystemdb.tbl_bloodbank bb inner join blooddonationsystemdb.tbl_bloodstock bs on bs.idBloodBank = bb.idBloodbank inner join blooddonationsystemdb.tbl_donor d on bs.donorId=d.idDonor;")
+    users=cursor.execute("SELECT bs.idBloodBag, bb.name, bs.bloodGroup, bs.quantity, bs.expirationDate, concat(concat(d.firstName,' '),d.lastName) FROM blooddonationsystemdb.tbl_bloodbank bb inner join blooddonationsystemdb.tbl_bloodstock bs on bs.idBloodBank = bb.idBloodbank inner join blooddonationsystemdb.tbl_donor d on bs.donorId=d.idDonor;")
     if users>0:
         displayVector=cursor.fetchall()
         return render_template('readBloodstock.html',displayVector=displayVector)
@@ -336,7 +336,7 @@ def updateBloodBanks():
 def updateBloodstock():
 	msg = ''
 	cursor = mysql.connection.cursor()
-	users=cursor.execute("select idBloodBag from blooddonationsystemdb.tbl_bloodstock")
+	users = cursor.execute("SELECT bs.idBloodBag, bb.name, bs.bloodGroup, bs.quantity, bs.expirationDate, concat(concat(d.firstName,' '),d.lastName) FROM blooddonationsystemdb.tbl_bloodbank bb inner join blooddonationsystemdb.tbl_bloodstock bs on bs.idBloodBank = bb.idBloodbank inner join blooddonationsystemdb.tbl_donor d on bs.donorId=d.idDonor;")
 	if users>0:
 		bloodBagIdDisplay= cursor.fetchall()
 	users = cursor.execute("SELECT name FROM blooddonationsystemdb.tbl_bloodbank")
@@ -496,43 +496,19 @@ def deleteBloodBanks():
 def deleteBloodstock():
 	msg = ''
 	cursor = mysql.connection.cursor()
-	users=cursor.execute("select idBloodBag from blooddonationsystemdb.tbl_bloodstock")
+	users=cursor.execute("SELECT bs.idBloodBag, bb.name, bs.bloodGroup, bs.quantity, bs.expirationDate, concat(concat(d.firstName,' '),d.lastName) FROM blooddonationsystemdb.tbl_bloodbank bb inner join blooddonationsystemdb.tbl_bloodstock bs on bs.idBloodBank = bb.idBloodbank inner join blooddonationsystemdb.tbl_donor d on bs.donorId=d.idDonor;")
 	if users>0:
 		bloodBagIdDisplay= cursor.fetchall()
-	users = cursor.execute("SELECT name FROM blooddonationsystemdb.tbl_bloodbank")
-	if users > 0:
-		bloodBankIdDisplay = cursor.fetchall()
 
-	users = cursor.execute("SELECT * FROM blooddonationsystemdb.tbl_donor")
-	if users > 0:
-		bloodDonorIdDisplay = cursor.fetchall()
-
-	if request.method == 'POST' and 'donorId' in request.form and 'bloodBankId' in request.form and 'quantity' in request.form and 'expirDate' in request.form:
+	if request.method == 'POST' and 'bloodBagId' in request.form:
 		var_bloodBagId=request.form['bloodBagId']
-		var_donorName = request.form['donorId']
-		var_bloodBankName = request.form['bloodBankId']
-		var_quantity = request.form['quantity']
-		var_expirDate = request.form['expirDate']
-		var_donorNameSplitted = var_donorName.split()
-		users0 = cursor.execute("SELECT idDonor FROM blooddonationsystemdb.tbl_donor where firstName = %s and lastName=%s",(var_donorNameSplitted[0], var_donorNameSplitted[1]))
-		if users0 > 0:
-			var_bloodDonorId = cursor.fetchall()
-
-		users1 = cursor.execute("SELECT idBloodbank FROM blooddonationsystemdb.tbl_bloodbank where name=%s",(var_bloodBankName,))
-		if users1 > 0:
-			var_bloodBankId = cursor.fetchall()
-
-		users2 = cursor.execute("SELECT bloodGroup FROM blooddonationsystemdb.tbl_donor where idDonor=%s",(var_bloodDonorId,))
-		if users2 > 0:
-			var_bloodGroup = cursor.fetchall()
-
 		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-		cursor.execute("UPDATE blooddonationsystemdb.tbl_bloodstock SET idBloodBank=%s,bloodGroup=%s,quantity=%s,expirationDate=%s,donorId=%s WHERE idBloodBag=%s;",(var_bloodBankId, var_bloodGroup, var_quantity, var_expirDate, var_bloodDonorId,var_bloodBagId))
+		cursor.execute("delete from blooddonationsystemdb.tbl_bloodstock WHERE idBloodBag=%s;",(var_bloodBagId,))
 		mysql.connection.commit()
 		msg = 'You have successfully registered !'
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
-	return render_template('deleteBloodstock.html', bloodBankIdDisplay=bloodBankIdDisplay,bloodDonorIdDisplay=bloodDonorIdDisplay, bloodBagIdDisplay=bloodBagIdDisplay,msg=msg)
+	return render_template('deleteBloodstock.html', bloodBagIdDisplay=bloodBagIdDisplay,msg=msg)
 
 @app.route('/deleteRequest', methods=['GET', 'POST'])
 def deleteRequest():
