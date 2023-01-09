@@ -487,9 +487,9 @@ def deleteRequest():
 		msg = 'Please fill out the form !'
 	return render_template('deleteRequest.html',requestIdDIsplay=requestIdDIsplay, msg=msg)
 
-app.debug = True
+#app.debug = True
 
-toolbar = DebugToolbarExtension(app)
+#toolbar = DebugToolbarExtension(app)
 
 if __name__ == "__main__":
-	app.run(host ="localhost", port = int("5000"),debug=True)
+	app.run(host ="localhost", port = int("5000"),debug=False)
